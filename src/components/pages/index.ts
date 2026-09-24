@@ -1,0 +1,10 @@
+export { HomePage } from "./home";
+export { ProjectsPage } from "./projects";
+export { DiscoverPage } from "./discover";
+export { ChatsPage } from "./chats";
+export { UserPage } from "./user";
+export { NewsPage } from "./news";
+export { LeadershipPage } from "./leadership";
+export { ManifestoPage } from "./manifesto";
+export { default as EventScannerPage } from "./eventscanner_new";
+export { FundingRequestsPage } from "./funding-requests";

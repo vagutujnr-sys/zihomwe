@@ -1,0 +1,1 @@
+Change projects Query to personal projects funded by the party 
