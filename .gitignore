@@ -43,5 +43,6 @@ next-env.d.ts
 # Android signing material. Keep the keystore; do not publish it.
 /android/*.keystore
 /android/signing-credentials.txt
+/android/signing-backup.txt
 /android/app/build
 /android/.gradle

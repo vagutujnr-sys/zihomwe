@@ -1,5 +1,5 @@
 {
-  "packageId": "app.zihomwe.twa",
+  "packageId": "cozw.zihomwe.lite",
   "host": "zihomwe.vercel.app",
   "name": "Zihomwe",
   "launcherName": "Zihomwe",
@@ -18,9 +18,9 @@
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "./android.keystore",
-    "alias": "android"
+    "alias": "lloydgutu"
   },
-  "appVersionName": "1",
+  "appVersionName": "1.0.0.1",
   "appVersionCode": 1,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
