@@ -40,6 +40,8 @@ export function CallRuntime() {
   const [error, setError] = useState("");
   const [muted, setMuted] = useState(false);
   const [cameraOn, setCameraOn] = useState(true);
+  const [callStartedAt, setCallStartedAt] = useState<number | null>(null);
+  const [callDuration, setCallDuration] = useState(0);
   const engineRef = useRef<WebRtcCall | null>(null);
   const callIdRef = useRef<string | null>(null);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
@@ -62,6 +64,8 @@ export function CallRuntime() {
     setIncoming(null);
     setMuted(false);
     setCameraOn(true);
+    setCallStartedAt(null);
+    setCallDuration(0);
     setError(message);
   }
 
@@ -77,7 +81,10 @@ export function CallRuntime() {
     const engine = new WebRtcCall(callId, type, nextRole, {
       onRemoteStream: () => attachStreams(engine),
       onStatus: (status) => {
-        if (status === "active") setPhase("active");
+        if (status === "active") {
+          setPhase("active");
+          setCallStartedAt((startedAt) => startedAt ?? Date.now());
+        }
         if (status === "ringing") setPhase("ringing");
       },
       onEnded: (reason) => {
@@ -211,7 +218,16 @@ export function CallRuntime() {
     return () => window.clearTimeout(timer);
   }, [error]);
 
+  useEffect(() => {
+    if (!callStartedAt || phase !== "active") return;
+    const updateDuration = () => setCallDuration(Math.max(0, Math.floor((Date.now() - callStartedAt) / 1000)));
+    updateDuration();
+    const timer = window.setInterval(updateDuration, 1000);
+    return () => window.clearInterval(timer);
+  }, [callStartedAt, phase]);
+
   const inCall = phase !== "idle" && role;
+  const durationLabel = `${String(Math.floor(callDuration / 60)).padStart(2, "0")}:${String(callDuration % 60).padStart(2, "0")}`;
   const title =
     phase === "ringing"
       ? callType === "video"
@@ -283,6 +299,9 @@ export function CallRuntime() {
             <div className="absolute left-0 right-0 top-0 bg-gradient-to-b from-black/70 to-transparent px-5 pb-10 pt-8">
               <p className="text-sm text-white/80">{title}</p>
               <p className="mt-1 text-xl font-semibold">{labelFor(person)}</p>
+              <p className="mt-1 text-sm tabular-nums text-white/75" aria-live="polite">
+                {phase === "active" ? durationLabel : "Waiting for connection"}
+              </p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-4 px-6 pb-10 pt-4">

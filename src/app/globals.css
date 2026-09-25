@@ -64,6 +64,13 @@ html, body, #__next {
   box-sizing: border-box;
 }
 
+/* Prevent Safari from zooming when a form control receives focus. */
+input:not([type="hidden"]),
+select,
+textarea {
+  font-size: 16px;
+}
+
 .input {
   width: 100%;
   min-width: 0;

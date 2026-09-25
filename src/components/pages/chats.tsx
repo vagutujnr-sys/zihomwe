@@ -719,8 +719,8 @@ function ChatThread({ chatId, initialOther, onBack }: { chatId: string; initialO
   }
 
   return (
-    <div className="flex h-screen flex-col bg-slate-50">
-      <header className="flex items-center gap-3 border-b border-slate-200 bg-white px-3 py-2.5">
+    <div className="fixed inset-0 z-[60] flex h-[100dvh] min-h-0 flex-col overflow-hidden bg-slate-50">
+      <header className="flex shrink-0 items-center gap-3 border-b border-slate-200 bg-white px-3 py-2.5">
         <button type="button" onClick={onBack} className="rounded-full p-2 hover:bg-slate-100" aria-label="Back">
           <ArrowLeft className="h-5 w-5 text-slate-700" />
         </button>
@@ -754,7 +754,7 @@ function ChatThread({ chatId, initialOther, onBack }: { chatId: string; initialO
       <div
         ref={scrollerRef}
         onScroll={rememberScroll}
-        className="flex-1 space-y-2 overflow-y-auto px-3 py-4"
+        className="min-h-0 flex-1 space-y-2 overflow-y-auto overscroll-contain px-3 py-4"
       >
         {loading && messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-6" role="status" aria-label="Securing Encrypted Channel" aria-live="polite">
@@ -822,7 +822,7 @@ function ChatThread({ chatId, initialOther, onBack }: { chatId: string; initialO
         })}
       </div>
 
-      <form onSubmit={sendMessage} className="border-t border-slate-200 bg-white px-3 py-2">
+      <form onSubmit={sendMessage} className="shrink-0 border-t border-slate-200 bg-white px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2">
         {error && messages.length > 0 ? <p className="mb-2 text-xs text-rose-600">{error}</p> : null}
         {replyTo ? (
           <div className="mb-2 flex items-start gap-2 rounded-xl border-l-4 border-emerald-600 bg-slate-50 px-3 py-2">

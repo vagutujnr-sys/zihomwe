@@ -359,13 +359,13 @@ export function AppShell({ resumePin = false }: { resumePin?: boolean }) {
   }
 
   return (
-    <div className="relative h-screen w-full overflow-hidden text-slate-900">
+    <div className="relative min-h-[100dvh] w-full overflow-x-hidden overflow-y-auto text-slate-900">
       <div
         className="pointer-events-none fixed inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/main_bg.png')" }}
       />
 
-      <div className="relative z-10 flex w-full max-w-md flex-shrink-0 flex-col justify-center px-4 pb-5 pt-4 sm:px-6">
+      <div className="relative z-10 flex min-h-[100dvh] w-full max-w-md flex-shrink-0 flex-col justify-center px-4 pb-10 pt-4 sm:px-6">
         <div className="mb-2 text-center">
           <img src="/logo_main.png" alt="Zihomwe" className="mx-auto mb-4 h-[150px] w-auto" />
         </div>
