@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.zihomwe.twa",
+      "sha256_cert_fingerprints": [
+        "0C:0D:CA:4F:07:93:6D:06:FF:DD:F1:97:28:13:C8:42:DB:D4:D3:62:C3:EF:E6:94:B8:4D:05:99:CB:BC:36:2F"
+      ]
+    }
+  }
+]
