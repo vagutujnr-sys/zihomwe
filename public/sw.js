@@ -3,7 +3,13 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then((keys) => Promise.all(
+      keys
+        .filter((key) => key !== "zihomwe-static-v2")
+        .map((key) => caches.delete(key)),
+    )).then(() => self.clients.claim()),
+  );
 });
 
 self.addEventListener("fetch", (event) => {
@@ -12,10 +18,14 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
 
   // Keep API and authenticated page responses network-backed; cache only static assets.
-  if (request.destination === "document" || request.url.includes("/_next/data/")) return;
+  if (
+    request.destination === "document" ||
+    request.url.includes("/_next/data/") ||
+    new URL(request.url).pathname.startsWith("/api/")
+  ) return;
 
   event.respondWith(
-    caches.open("zihomwe-static-v1").then(async (cache) => {
+    caches.open("zihomwe-static-v2").then(async (cache) => {
       const cached = await cache.match(request);
 
       try {
