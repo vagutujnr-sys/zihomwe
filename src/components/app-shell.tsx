@@ -254,7 +254,7 @@ export function AppShell({ resumePin = false }: { resumePin?: boolean }) {
 
   function handleConfirmOtp() {
     if (!otpComplete || !termsAccepted) return;
-    if (!draft.fullName.trim()) {
+    if (!(draft.fullName ?? "").trim()) {
       setLoginError("Enter your full name.");
       return;
     }
@@ -584,7 +584,7 @@ export function AppShell({ resumePin = false }: { resumePin?: boolean }) {
               <button
                 type="button"
                 onClick={handleConfirmOtp}
-                disabled={!otpComplete || !termsAccepted || !draft.fullName.trim() || !isValidHandle(chosenHandle) || handleStatus === "taken" || handleStatus === "checking"}
+                disabled={!otpComplete || !termsAccepted || !(draft.fullName ?? "").trim() || !isValidHandle(chosenHandle) || handleStatus === "taken" || handleStatus === "checking"}
                 className={confirmBtnClass}
                 style={{ fontSize: 16 }}
               >

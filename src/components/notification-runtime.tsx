@@ -74,7 +74,6 @@ function showBrowserNotification(item: AppNotification, onClick: () => void) {
     const note = new Notification(item.title || "Zihomwe", {
       body: item.message,
       tag: item.id,
-      renotify: true,
       icon: iconUrl,
       badge: iconUrl,
       data: { chatId: item.chatId, type: item.type, id: item.id },

@@ -116,7 +116,3 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ message: "Could not unblock user." }, { status: 500 });
   }
 }
-
-// silence unused import in some builds
-void isBlockedEitherWay;
-void formatHandle;

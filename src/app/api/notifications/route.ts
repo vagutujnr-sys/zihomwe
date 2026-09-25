@@ -35,27 +35,30 @@ export async function GET(request: Request) {
     const supabase = getSupabaseServer();
     const registrationId = me.id;
 
-    let result = await supabase
+    const withData = await supabase
       .from("notifications")
       .select("id, title, message, type, read_at, created_at, data")
       .eq("registration_id", registrationId)
       .order("created_at", { ascending: false })
       .limit(40);
 
-    if (result.error && String(result.error.message || "").includes("data")) {
-      result = await supabase
+    let rows: Record<string, unknown>[] = (withData.data ?? []) as Record<string, unknown>[];
+    if (withData.error && String(withData.error.message || "").includes("data")) {
+      const withoutData = await supabase
         .from("notifications")
         .select("id, title, message, type, read_at, created_at")
         .eq("registration_id", registrationId)
         .order("created_at", { ascending: false })
         .limit(40);
-    }
-
-    if (result.error) {
+      if (withoutData.error) {
+        return NextResponse.json({ message: "Unable to load notifications." }, { status: 500 });
+      }
+      rows = (withoutData.data ?? []) as Record<string, unknown>[];
+    } else if (withData.error) {
       return NextResponse.json({ message: "Unable to load notifications." }, { status: 500 });
     }
 
-    const notifications = (result.data ?? []).map((row) => mapNotification(row as Record<string, unknown>));
+    const notifications = rows.map((row) => mapNotification(row));
 
     return NextResponse.json({
       notifications,
